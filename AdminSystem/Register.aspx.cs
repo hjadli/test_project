@@ -26,7 +26,7 @@ public partial class UserRegister : System.Web.UI.Page
         string gender = radioMale.Checked ? "Male" : "Female";
 
         // Connect to the database and insert the user record
-        string connectionString = "your_connection_string_here";
+        string connectionString = "Data Source=v00egd00002l.lec-admin.dmu.ac.uk;Initial Catalog=p2771538;User ID=P2771538;Password=9gQ3nIppVO6NxBeWAq;Connect Timeout=30;";
         using (SqlConnection con = new SqlConnection(connectionString))
         {
             con.Open();
