@@ -10,16 +10,13 @@ namespace Testing1
     public class UsersTest
     {
         [TestMethod]
-        public void usersOK()
+        public void UsersClassOK()
         {
-            //create an instance of the class we want to create
-            User clsusers = new User();
-            //test to see that it exists
-            Assert.IsNotNull(clsusers);
+            // Create an instance of the class we want to create
+            Users users = new Users();
+            // Test to see that it exists
+            Assert.IsNotNull(users);
         }
-
-
-
 
         [TestMethod]
         public void CreateUser_ShouldSetProperties()
@@ -72,7 +69,7 @@ namespace Testing1
         [TestMethod]
         public void ValidRole_User_ShouldBeSet()
         {
-            var user = new User
+            var user = new Users
             {
                 Role = "user"
             };
@@ -83,7 +80,7 @@ namespace Testing1
         [TestMethod]
         public void ValidRole_Admin_ShouldBeSet()
         {
-            var user = new User
+            var user = new Users
             {
                 Role = "admin"
             };
@@ -94,7 +91,7 @@ namespace Testing1
         [TestMethod]
         public void EmailFormat_ShouldBeValid()
         {
-            var user = new User
+            var user = new Users
             {
                 Email = "happy@gmail.com"
             };
@@ -112,7 +109,7 @@ namespace Testing1
         private bool IsValidEmail(string email)
         {
             var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(email, emailPattern);
+            return System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern);
         }
 
         private void ValidateEmailFormat(string email)
@@ -123,29 +120,32 @@ namespace Testing1
             }
         }
 
-
-
-        /******************FIND METHOD TEST******************/
+        /****************** FIND METHOD TEST ******************/
 
         [TestMethod]
         public void FindMethodOK()
         {
-            //create an instance of the class we want to create
-            User users = new User();
-            //create a Boolean variable to store the results of the validation
-            Boolean Found = false;
-            //create some test data to use with the method
-            Int32 userid = 1;
-            //invoke the method
-            Found = users.Find(userid);
-            //test to see if the result is true
-            Assert.IsTrue(Found);
+            // Create an instance of the class we want to create
+            Users users = new Users();
+            // Create some test data to use with the method
+            int userId = 1;
+            // Invoke the method
+            bool found = users.Find(userId);
+            // Test to see if the result is true
+            Assert.IsTrue(found);
         }
 
-
-
-
+        [TestMethod]
+        public void FindMethodNotFound()
+        {
+            // Create an instance of the class we want to create
+            Users users = new Users();
+            // Create some test data to use with the method
+            int userId = 999; // Assume this ID does not exist
+            // Invoke the method
+            bool found = users.Find(userId);
+            // Test to see if the result is false
+            Assert.IsFalse(found);
+        }
     }
 }
-
-
