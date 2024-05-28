@@ -4,33 +4,43 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Register</title>
 </head>
 <body>
-    <form id="register" runat="server">
+    <form id="form1" runat="server">
         <div>
-            <h2>User Registration</h2>
-            <label>Username:</label>
-            <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox><br /><br />
-            
-            <label>Password:</label>
-            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox><br /><br />
-            
-            <label>Email:</label>
-            <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox><br /><br />
-
-            <label>Gender:</label>
-            <asp:RadioButton ID="radioMale" GroupName="Gender" runat="server" Text="Male" /><br />
-            <asp:RadioButton ID="radioFemale" GroupName="Gender" runat="server" Text="Female" /><br /><br />
-
-            <asp:CheckBox ID="chkTerms" runat="server" Text="I accept the terms and conditions" /><br /><br />
-
-            <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="btnRegister_Click" /><br /><br />
-
-            <asp:Label ID="lblMessage" runat="server" ForeColor="Green" />
+            <h2>Register</h2>
+            <asp:Label ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
+            <table>
+                <tr>
+                    <td>First Name:</td>
+                    <td><asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td>Last Name:</td>
+                    <td><asp:TextBox ID="txtLastName" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><asp:TextBox ID="txtEmail" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td>Address:</td>
+                    <td><asp:TextBox ID="txtAddress" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="BtnRegister_Click" />
+                        <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="BtnUpdate_Click" />
+                        <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="BtnDelete_Click" />
+                    </td>
+                </tr>
+            </table>
         </div>
     </form>
 </body>
 </html>
-
-

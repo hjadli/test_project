@@ -1,151 +1,130 @@
-﻿using ClassLibrary;
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using System;
-using System.Text.RegularExpressions;
+using ClassLibrary;
 
 namespace Testing1
 {
     [TestClass]
-    public class UsersTest
+    public class UsersTests
     {
-        [TestMethod]
-        public void usersOK()
+        // Method to create a sample user object for testing
+        private Users CreateTestUser()
         {
-            //create an instance of the class we want to create
-            User clsusers = new User();
-            //test to see that it exists
-            Assert.IsNotNull(clsusers);
-        }
-
-
-
-
-        [TestMethod]
-        public void CreateUser_ShouldSetProperties()
-        {
-            var user = new Users
+            return new Users
             {
                 FirstName = "Harpreet",
                 LastName = "Singh",
-                Email = "happy@gmail.com",
-                Address = "Leicester",
-                Password = "123456789",
+                Email = "harpreet.singh@example.com",
+                Password = "password123",
+                Address = "123 Main St",
                 Role = "user",
                 IsActive = true
             };
-
-            Assert.AreEqual("Harpreet", user.FirstName);
-            Assert.AreEqual("Singh", user.LastName);
-            Assert.AreEqual("happy@gmail.com", user.Email);
-            Assert.AreEqual("Leicester", user.Address);
-            Assert.AreEqual("123456789", user.Password);
-            Assert.AreEqual("user", user.Role);
-            Assert.IsTrue(user.IsActive);
         }
 
+        // Test to ensure that an instance of the Users class can be created
         [TestMethod]
-        public void DefaultRole_ShouldBeUser()
+        public void InstanceCreationTest()
         {
-            var user = new Users
-            {
-                FirstName = "Harpreet",
-                LastName = "Singh",
-                Email = "happy@gmail.com",
-                Address = "Leicester",
-                Password = "123456789"
-            };
-
-            Assert.AreEqual("user", user.Role);
+            Users user = new Users(); // Create an instance of Users
+            Assert.IsNotNull(user); // Check that the instance is not null
         }
 
+        // Test to ensure that the Valid method works with valid data
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException), "Invalid role specified. Only 'user' or 'admin' are allowed.")]
-        public void InvalidRole_ShouldThrowException()
+        public void ValidMethodTest_ValidData()
         {
-            var user = new Users
-            {
-                Role = "invalid"
-            };
+            Users user = new Users(); // Create an instance of Users
+            string error = user.Valid("Harpreet", "Singh", "harpreet.singh@example.com", "password123", "123 Main St"); // Call the Valid method with valid data
+            Assert.AreEqual("", error); // Check that the method returns an empty error string
         }
 
+        // Test to ensure that the Valid method detects missing first name
         [TestMethod]
-        public void ValidRole_User_ShouldBeSet()
+        public void ValidMethodTest_MissingFirstName()
         {
-            var user = new User
-            {
-                Role = "user"
-            };
-
-            Assert.AreEqual("user", user.Role);
+            Users user = new Users(); // Create an instance of Users
+            string error = user.Valid("", "Singh", "harpreet.singh@example.com", "password123", "123 Main St"); // Call the Valid method with missing first name
+            Assert.AreEqual("First name is required.", error); // Check that the method returns the appropriate error message
         }
 
+        // Test to ensure that the Valid method detects missing last name
         [TestMethod]
-        public void ValidRole_Admin_ShouldBeSet()
+        public void ValidMethodTest_MissingLastName()
         {
-            var user = new User
-            {
-                Role = "admin"
-            };
-
-            Assert.AreEqual("admin", user.Role);
+            Users user = new Users(); // Create an instance of Users
+            string error = user.Valid("Harpreet", "", "harpreet.singh@example.com", "password123", "123 Main St"); // Call the Valid method with missing last name
+            Assert.AreEqual("Last name is required.", error); // Check that the method returns the appropriate error message
         }
 
+        // Test to ensure that the Valid method detects an invalid email
         [TestMethod]
-        public void EmailFormat_ShouldBeValid()
+        public void ValidMethodTest_InvalidEmail()
         {
-            var user = new User
-            {
-                Email = "happy@gmail.com"
-            };
-
-            Assert.IsTrue(IsValidEmail(user.Email));
+            Users user = new Users(); // Create an instance of Users
+            string error = user.Valid("Harpreet", "Singh", "invalid-email", "password123", "123 Main St"); // Call the Valid method with an invalid email
+            Assert.AreEqual("A valid email is required.", error); // Check that the method returns the appropriate error message
         }
 
+        // Test to ensure that the Valid method detects missing password
         [TestMethod]
-        [ExpectedException(typeof(FormatException), "Invalid email format.")]
-        public void InvalidEmailFormat_ShouldThrowException()
+        public void ValidMethodTest_MissingPassword()
         {
-            ValidateEmailFormat("invalid-email");
+            Users user = new Users(); // Create an instance of Users
+            string error = user.Valid("Harpreet", "Singh", "harpreet.singh@example.com", "", "123 Main St"); // Call the Valid method with missing password
+            Assert.AreEqual("Password is required.", error); // Check that the method returns the appropriate error message
         }
 
-        private bool IsValidEmail(string email)
-        {
-            var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(email, emailPattern);
-        }
-
-        private void ValidateEmailFormat(string email)
-        {
-            if (!IsValidEmail(email))
-            {
-                throw new FormatException("Invalid email format.");
-            }
-        }
-
-
-
-        /******************FIND METHOD TEST******************/
-
+        // Test to ensure that the Valid method detects multiple errors
         [TestMethod]
-        public void FindMethodOK()
+        public void ValidMethodTest_MultipleErrors()
         {
-            //create an instance of the class we want to create
-            User users = new User();
-            //create a Boolean variable to store the results of the validation
-            Boolean Found = false;
-            //create some test data to use with the method
-            Int32 userid = 1;
-            //invoke the method
-            Found = users.Find(userid);
-            //test to see if the result is true
-            Assert.IsTrue(Found);
+            Users user = new Users(); // Create an instance of Users
+            string error = user.Valid("", "", "invalid-email", "", "123 Main St"); // Call the Valid method with multiple invalid fields
+            Assert.AreEqual("First name is required. Last name is required. A valid email is required. Password is required.", error); // Check that the method returns all the appropriate error messages
         }
 
+        // Test to ensure that the Role property accepts "user"
+        [TestMethod]
+        public void RolePropertyTest_ValidUser()
+        {
+            Users user = new Users { Role = "user" }; // Set the Role property to "user"
+            Assert.AreEqual("user", user.Role); // Check that the Role property is correctly set
+        }
 
+        // Test to ensure that the Role property accepts "admin"
+        [TestMethod]
+        public void RolePropertyTest_ValidAdmin()
+        {
+            Users user = new Users { Role = "admin" }; // Set the Role property to "admin"
+            Assert.AreEqual("admin", user.Role); // Check that the Role property is correctly set
+        }
 
+        // Test to ensure that the Role property throws an exception for an invalid role
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void RolePropertyTest_InvalidRole()
+        {
+            Users user = new Users { Role = "invalidrole" }; // Set the Role property to an invalid role, which should throw an exception
+        }
 
+        // Test to ensure that the Find method works when the user is found
+        [TestMethod]
+        public void FindMethodTest_UserFound()
+        {
+            Users user = new Users(); // Create an instance of Users
+            bool found = user.Find(1); // Call the Find method with a UserId that exists in the simulated data source
+            Assert.IsTrue(found); // Check that the user is found
+            Assert.AreEqual("Harpreet", user.FirstName); // Check that the user's first name is correctly set
+        }
+
+        // Test to ensure that the Find method works when the user is not found
+        [TestMethod]
+        public void FindMethodTest_UserNotFound()
+        {
+            Users user = new Users(); // Create an instance of Users
+            bool found = user.Find(-1); // Call the Find method with a UserId that does not exist in the simulated data source
+            Assert.IsFalse(found); // Check that the user is not found
+        }
     }
 }
-
-
