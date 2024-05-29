@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing3", "Testing3\Testin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing2", "Testing2\Testing2.csproj", "{53F17854-E215-4FE3-9860-C1E18BF9C6C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing1", "Testing1\Testing1.csproj", "{4186B3B3-EBEA-434E-844F-F79D774C252B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsersTesting", "Testing1\UsersTesting.csproj", "{4186B3B3-EBEA-434E-844F-F79D774C252B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1F8955B8-B5F7-4941-AB31-075D4AC2B109}"
 EndProject
