@@ -5,7 +5,7 @@ using System;
 namespace Testing1
 {
     [TestClass]
-    public class tstUsers
+    public class TstUsers
     {
         // Some test Data
         string firstName = "Harpreet";
