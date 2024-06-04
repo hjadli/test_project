@@ -66,30 +66,57 @@ namespace ClassLibrary
             set { mIsActive = value; }
         }
 
-        // Find method
+
+        // Find method for user by UserId
         public bool Find(int userId)
         {
-            // Here you would normally connect to a database to find the record
-            // Simulating finding a record by setting data based on userId
-            if (userId == 1)
+            clsDataConnection DB = new clsDataConnection();
+            DB.AddParameter("@UserId", userId);
+            DB.Execute("sproc_tblUsers_FindByUserId");
+
+            if (DB.Count == 1)
             {
-                mUserId = 1;
-                mFirstName = "Harpreet";
-                mLastName = "Singh";
-                mEmail = "Harpreet.Singh@example.com";
-                mAddress = "123 Main St";
-                mPassword = "password123";
-                mRole = "user";
-                mIsActive = true;
+                mUserId = Convert.ToInt32(DB.DataTable.Rows[0]["UserId"]);
+                mFirstName = Convert.ToString(DB.DataTable.Rows[0]["FirstName"]);
+                mLastName = Convert.ToString(DB.DataTable.Rows[0]["LastName"]);
+                mEmail = Convert.ToString(DB.DataTable.Rows[0]["Email"]);
+                mAddress = Convert.ToString(DB.DataTable.Rows[0]["Address"]);
+                mPassword = Convert.ToString(DB.DataTable.Rows[0]["Password"]);
+                mRole = Convert.ToString(DB.DataTable.Rows[0]["Role"]);
+                mIsActive = Convert.ToBoolean(DB.DataTable.Rows[0]["IsActive"]);
                 return true;
             }
             else
             {
-                // Simulate record not found
                 return false;
             }
         }
 
+        // Find method for user by Email and Password
+        public bool FindUser(string email, string password)
+        {
+            clsDataConnection DB = new clsDataConnection();
+            DB.AddParameter("@Email", email);
+            DB.AddParameter("@Password", password);
+            DB.Execute("sproc_tblUsers_FindByEmailAndPassword");
+
+            if (DB.Count == 1)
+            {
+                mUserId = Convert.ToInt32(DB.DataTable.Rows[0]["UserId"]);
+                mFirstName = Convert.ToString(DB.DataTable.Rows[0]["FirstName"]);
+                mLastName = Convert.ToString(DB.DataTable.Rows[0]["LastName"]);
+                mEmail = Convert.ToString(DB.DataTable.Rows[0]["Email"]);
+                mAddress = Convert.ToString(DB.DataTable.Rows[0]["Address"]);
+                mPassword = Convert.ToString(DB.DataTable.Rows[0]["Password"]);
+                mRole = Convert.ToString(DB.DataTable.Rows[0]["Role"]);
+                mIsActive = Convert.ToBoolean(DB.DataTable.Rows[0]["IsActive"]);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         // Valid method
         public string Valid(string firstName, string lastName, string email, string address, string password, string role, string isActive)
         {
@@ -101,69 +128,69 @@ namespace ClassLibrary
             // FirstName cannot be blank
             if (firstName.Length == 0)
             {
-                Error += "The first name may not be blank : ";
+                Error += "The first name may not be blank. ";
             }
             // FirstName must be less than 50 characters
             if (firstName.Length > 50)
             {
-                Error += "The first name must be less than 50 characters : ";
+                Error += "The first name must be less than 50 characters. ";
             }
 
             // LastName cannot be blank
             if (lastName.Length == 0)
             {
-                Error += "The last name may not be blank : ";
+                Error += "The last name may not be blank. ";
             }
             // LastName must be less than 50 characters
             if (lastName.Length > 50)
             {
-                Error += "The last name must be less than 50 characters : ";
+                Error += "The last name must be less than 50 characters. ";
             }
 
             // Email cannot be blank
             if (email.Length == 0)
             {
-                Error += "The email may not be blank : ";
+                Error += "The email may not be blank. ";
             }
             // Email must be less than 100 characters
             if (email.Length > 100)
             {
-                Error += "The email must be less than 100 characters : ";
+                Error += "The email must be less than 100 characters. ";
             }
             // Email must be in a valid format
             if (!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                Error += "The email format is not valid : ";
+                Error += "The email format is not valid. ";
             }
 
             // Address must be less than 255 characters
             if (address.Length > 255)
             {
-                Error += "The address must be less than 255 characters : ";
+                Error += "The address must be less than 255 characters. ";
             }
 
             // Password cannot be blank
             if (password.Length == 0)
             {
-                Error += "The password may not be blank : ";
+                Error += "The password may not be blank. ";
             }
             // Password must be less than 255 characters
             if (password.Length > 255)
             {
-                Error += "The password must be less than 255 characters : ";
+                Error += "The password must be less than 255 characters. ";
             }
 
             // Role must be either 'admin' or 'user'
             if (role != "admin" && role != "user")
             {
-                Error += "The role must be either 'admin' or 'user' : ";
+                Error += "The role must be either 'admin' or 'user'. ";
             }
 
             // IsActive must be either 'true' or 'false'
             bool isActiveBool;
             if (!bool.TryParse(isActive, out isActiveBool))
             {
-                Error += "The active status must be either 'true' or 'false' : ";
+                Error += "The active status must be either 'true' or 'false'. ";
             }
 
             // Return any error messages
