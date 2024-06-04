@@ -7,25 +7,18 @@
   <title>Login</title>
 </head>
 <body>
-    <form id="form1" runat="server">
+   <form id="form1" runat="server">
         <div>
             <h2>Login</h2>
-            <asp:Label ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
-            <table>
-                <tr>
-                    <td>Email:</td>
-                    <td><asp:TextBox ID="txtEmail" runat="server"></asp:TextBox></td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td><asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" />
-                    </td>
-                </tr>
-            </table>
+            <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
+            <br />
+            <asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label>
+            <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lblPassword" runat="server" Text="Password:"></asp:Label>
+            <asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
+            <br />
+            <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="BtnLogin_Click" />
         </div>
     </form>
 </body>

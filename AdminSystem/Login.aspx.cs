@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 public partial class _1_List : System.Web.UI.Page
 {
-    UsersCollection usersCollection = new UsersCollection();
+    
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -18,68 +18,64 @@ public partial class _1_List : System.Web.UI.Page
         }
     }
 
-    protected void btnLogin_Click(object sender, EventArgs e)
+    protected void BtnLogin_Click(object sender, EventArgs e)
     {
-        if (ValidateInputs())
+        string email = txtEmail.Text;
+        string password = txtPassword.Text;
+
+        if (ValidateInputs(email, password))
         {
-            try
+            ClsUsers user = new ClsUsers();
+            if (user.FindUser(email, password))
             {
-                string email = txtEmail.Text;
-                string password = txtPassword.Text;
+                // Set session variables
+                Session["UserId"] = user.UserId;
+                Session["Role"] = user.Role;
+                Session["FirstName"] = user.FirstName;
 
-                Users userToAuthenticate = usersCollection.UsersList.Find(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-
-                if (userToAuthenticate != null && userToAuthenticate.Password == password)
+                // Redirect based on role
+                if (user.Role == "admin")
                 {
-                    lblMessage.Text = "Login successful!";
-                    lblMessage.ForeColor = System.Drawing.Color.Green;
-
-                    // Set the user session
-                    Session["UserId"] = userToAuthenticate.UserId;
-                    Session["FirstName"] = userToAuthenticate.FirstName;
-                    Session["Email"] = userToAuthenticate.Email;
-                    Session["Role"] = userToAuthenticate.Role;
-
-                    // Redirect based on user role
-                    if (userToAuthenticate.Role == "admin")
-                    {
-                        Response.Redirect("~/Admin/Admin.aspx");
-                    }
-                    else
-                    {
-                        Response.Redirect("Dashboard.aspx");
-                    }
+                    Response.Redirect("~/Admin/Admin.aspx");
                 }
                 else
                 {
-                    lblMessage.Text = "Invalid email or password.";
-                    lblMessage.ForeColor = System.Drawing.Color.Red;
+                    Response.Redirect("~/Dashboard.aspx");
                 }
             }
-            catch (Exception ex)
+            else
             {
-                lblMessage.Text = "Error: " + ex.Message;
-                lblMessage.ForeColor = System.Drawing.Color.Red;
+                lblMessage.Text = "Invalid email or password.";
             }
         }
     }
 
-    private bool ValidateInputs()
+    private bool ValidateInputs(string email, string password)
     {
-        if (string.IsNullOrWhiteSpace(txtEmail.Text))
+        if (string.IsNullOrWhiteSpace(email))
         {
             lblMessage.Text = "Email is required.";
-            lblMessage.ForeColor = System.Drawing.Color.Red;
             return false;
         }
 
-        if (string.IsNullOrWhiteSpace(txtPassword.Text))
+        if (string.IsNullOrWhiteSpace(password))
         {
             lblMessage.Text = "Password is required.";
-            lblMessage.ForeColor = System.Drawing.Color.Red;
+            return false;
+        }
+
+        if (!IsValidEmail(email))
+        {
+            lblMessage.Text = "Invalid email format.";
             return false;
         }
 
         return true;
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern);
     }
 }

@@ -7,10 +7,10 @@
     <title>Register</title>
 </head>
 <body>
-    <form id="form1" runat="server">
+   <form id="form1" runat="server">
         <div>
             <h2>Register</h2>
-            <asp:Label ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
+            <asp:Label ID="lblMessage" runat="server" ForeColor="Red"></asp:Label>
             <table>
                 <tr>
                     <td>First Name:</td>
@@ -33,11 +33,8 @@
                     <td><asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox></td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="BtnRegister_Click" />
-                        <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="BtnUpdate_Click" />
-                        <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="BtnDelete_Click" />
-                    </td>
+                    <td></td>
+                    <td><asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="btnRegister_Click" /></td>
                 </tr>
             </table>
         </div>
