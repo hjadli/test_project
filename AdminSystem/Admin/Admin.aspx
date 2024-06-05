@@ -9,6 +9,7 @@
         .dashboard-container {
             text-align: center;
             margin-top: 50px;
+            border:1px solid black;
         }
         .dashboard-card {
             display: inline-block;
