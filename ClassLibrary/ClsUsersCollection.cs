@@ -66,6 +66,14 @@ using System.Threading.Tasks;
                 Index++;
             }
         }
+        public void FilterByName(string keyword)
+        {
+            clsDataConnection DB = new clsDataConnection();
+            DB.AddParameter("@Keyword", "%" + keyword + "%");
+            DB.Execute("sproc_tblUsers_FilterByName");
+            PopulateArray(DB);
+        }
+
         public bool IsEmailRegistered(string email)
         {
             clsDataConnection DB = new clsDataConnection();

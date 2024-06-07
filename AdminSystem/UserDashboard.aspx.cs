@@ -20,7 +20,7 @@ public partial class _1_DataEntry : System.Web.UI.Page
             else
             {
                 // If no user is logged in, redirect to login page
-                Response.Redirect("Login.aspx");
+                Response.Redirect("UserLogin.aspx");
             }
         }
     }
@@ -31,6 +31,10 @@ public partial class _1_DataEntry : System.Web.UI.Page
         Session.Clear();
 
         // Redirect to login page
-        Response.Redirect("Login.aspx");
+        Response.Redirect("UserLogin.aspx");
     }
+    protected void BtnManageAccount_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("ManageUserAccount.aspx");
+            }
 }

@@ -70,7 +70,13 @@ public partial class UserRegister : System.Web.UI.Page
             lblMessage.ForeColor = System.Drawing.Color.Red;
         }
     }
+    protected void btnUserLogin_Click(object sender, EventArgs e)
+    {
+     
 
+        // Redirect to login page
+        Response.Redirect("UserLogin.aspx");
+    }
     private void ClearForm()
     {
         txtFirstName.Text = "";

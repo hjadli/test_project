@@ -17,7 +17,7 @@ public partial class AdminDashboard : System.Web.UI.Page
             // Check if user is logged in and is an admin
             if (Session["UserId"] == null || Session["Role"] == null || Session["Role"].ToString() != "admin")
             {
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/UserLogin.aspx");
             }
         }
     }
