@@ -19,7 +19,7 @@ public partial class AdminDashboard : System.Web.UI.Page
             if (Session["UserId"] == null || Session["Role"] == null || Session["Role"].ToString() != "admin")
             {
                 // If no user is logged in or user is not admin, redirect to login page
-                Response.Redirect("~/Login.aspx");
+                Response.Redirect("~/UserLogin.aspx");
             }
             else
             {
@@ -59,6 +59,6 @@ public partial class AdminDashboard : System.Web.UI.Page
         // Clear the session
         Session.Clear();
         // Redirect to login page
-        Response.Redirect("~/Login.aspx");
+        Response.Redirect("~/UserLogin.aspx");
     }
 }

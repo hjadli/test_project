@@ -40,7 +40,7 @@ public partial class _1_List : System.Web.UI.Page
                 }
                 else
                 {
-                    Response.Redirect("~/Dashboard.aspx");
+                    Response.Redirect("~/UserDashboard.aspx");
                 }
             }
             else
